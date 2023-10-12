@@ -18,35 +18,35 @@
     <div class="card-body border p-3">
         <div class="row pb-3">
             <div class="col-6 offset-6 text-end">
-                <a asp-controller="Villa" asp-action="" class="btn btn-secondary"><i class="bi bi-house-add"></i> Add Villa</a>
+                <a asp-controller="Villa" asp-action="Create" class="btn btn-secondary"><i class="bi bi-house-add"></i> Add Villa</a>
             </div>
         </div>
     
 
-    <table class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>
-                    Name
-                </th>
-                <th>Price</th>
-                <th>Sqft</th>
-                <th>Occupancy</th>
-            </tr>
-        </thead>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>Price</th>
+                    <th>Sqft</th>
+                    <th>Occupancy</th>
+                </tr>
+            </thead>
 
-        <tbody>
-        @foreach(var item in Model)
-        {
-            <tr>
-                <input type="hidden" name="villaId" asp-for=@item.Id />
-                <td>@item.Name</td>
-                <td>@item.Price</td>
-                <td>@item.Sqft</td>
-                <td>@item.Occupancy</td>
-            </tr>
-        }
-        </tbody>
-    </table>
+            <tbody>
+            @foreach(var item in Model)
+            {
+                <tr>
+                    <input type="hidden" name="villaId" asp-for=@item.Id />
+                    <td>@item.Name</td>
+                    <td>@item.Price</td>
+                    <td>@item.Sqft</td>
+                    <td>@item.Occupancy</td>
+                </tr>
+            }
+            </tbody>
+        </table>
     </div>
 </div>
