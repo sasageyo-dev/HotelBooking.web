@@ -1,10 +1,11 @@
 ﻿using HotelBooking.Domain.Entities;
 using HotelBooking.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HotelBooking.Web.Controllers
 {
-    
+
     public class VillaController : Controller
     {
         private readonly ApplicationDbContext _db;
@@ -26,9 +27,17 @@ namespace HotelBooking.Web.Controllers
         [HttpPost]
         public IActionResult Create(Villa obj)
         {
-            _db.Villas.Add(obj);
-            _db.SaveChanges();
-            return RedirectToAction("Index");
+            if (obj.Name == obj.Description && obj.Name != null)
+            {
+                ModelState.AddModelError("", "Name and description value can not be same.");
+            }
+            if (ModelState.IsValid)
+            {
+                _db.Villas.Add(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View();
         }
     }
 }
