@@ -2,6 +2,7 @@
 using HotelBooking.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.ComponentModel;
 
 namespace HotelBooking.Web.Controllers
 {
@@ -34,6 +35,53 @@ namespace HotelBooking.Web.Controllers
             if (ModelState.IsValid)
             {
                 _db.Villas.Add(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Update(int villaId)
+        {
+            Villa? obj = _db.Villas.FirstOrDefault(x => x.Id == villaId);
+            if (obj is not null)
+            {
+                return View(obj);
+            }
+            return NotFound();
+        }
+
+        [HttpPost]
+        public IActionResult Update(Villa request)
+        {
+            if (ModelState.IsValid && request.Id > 0)
+            {
+                _db.Villas.Update(request);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int villaId)
+        {
+            Villa? obj = _db.Villas.FirstOrDefault(x => x.Id == villaId);
+            if (obj is not null)
+            {
+                return View(obj);
+            }
+            return NotFound();
+        }
+
+        [HttpPost]
+        public IActionResult Delete(Villa request)
+        {
+            Villa? response = _db.Villas.FirstOrDefault(x =>x.Id == request.Id);
+            if (response is not null)
+            {
+                _db.Villas.Remove(response);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
